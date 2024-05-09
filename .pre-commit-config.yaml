@@ -1,0 +1,24 @@
+default_language_version:
+  python: "python3.11"
+exclude: ^.vscode/.*$
+minimum_pre_commit_version: "2.15.0"
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: "https://github.com/PyCQA/isort"
+    rev: "5.13.2"
+    hooks:
+      - id: isort
+        args: [ "--profile", "black" ]
+        name: "Format code (isort)"
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        name: "Format code (black)"
