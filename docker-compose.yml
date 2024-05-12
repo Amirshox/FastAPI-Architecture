@@ -1,13 +1,19 @@
-version: '3.8'
 services:
+  fastapi:
+    container_name: fastapi-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c 'gunicorn -k uvicorn.workers.UvicornWorker -w 6 -t 120 --worker-connections 1000 --bind 0.0.0.0:8000 src.main:app'
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
   db:
+    container_name: db-container
     image: postgres:latest
     environment:
       POSTGRES_DB: mydb
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-    ports:
-      - "5433:5432"
-
-volumes:
-  postgres_data:
