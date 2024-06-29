@@ -42,7 +42,7 @@ FastAPI-Architecture/
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone [<repository-url>](https://github.com/Amirshox/FastAPI-Architecture.git)
 
 2. Navigate to the project directory:
    ```bash
