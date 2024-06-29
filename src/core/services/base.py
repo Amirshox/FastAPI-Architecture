@@ -1,8 +1,9 @@
 from abc import ABC
 from typing import Any, Generic, Sequence, Tuple, Type, TypeVar
 
+from fastapi import HTTPException
 from sqlalchemy import Row, delete, func, update
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
@@ -18,11 +19,17 @@ class AbstractBaseService(ABC, Generic[T]):
         self.model = model
 
     async def create(self, **kwargs) -> T:
-        instance = self.model(**kwargs)
-        self.session.add(instance)
-        await self.session.commit()
-        await self.session.refresh(instance)
-        return instance
+        try:
+            instance = self.model(**kwargs)
+            self.session.add(instance)
+            await self.session.commit()
+            await self.session.refresh(instance)
+            return instance
+        except IntegrityError:
+            await self.session.rollback()
+            raise HTTPException(
+                status_code=400, detail="Relationship with specified ID does not exist"
+            )
 
     async def update(self, id_: int, **kwargs) -> None:
         async with self.session:
