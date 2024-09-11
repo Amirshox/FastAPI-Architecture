@@ -1,8 +1,8 @@
-# FastAPI Serverless Architecture Project
+# FastAPI Architecture Project
 
 ## Introduction
 
-This project demonstrates a serverless architecture implemented with FastAPI, aiming to provide a scalable and efficient
+This project demonstrates architecture implemented with FastAPI, aiming to provide a scalable and efficient
 backend solution. The architecture is organized into various modules, including API routes, database models, and service
 classes, promoting clean code practices and easy maintenance.
 
